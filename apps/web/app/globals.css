@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Inter:wght@400;600&display=swap');
+
+html, body { height: 100%; background: radial-gradient(1200px 600px at 10% -10%, #fff7ed, #e0f2fe 40%, #dcfce7 80%); }
+.btn-bouncy { @apply px-5 py-3 rounded-puffy bg-jelly-400 text-white shadow-squish active:translate-y-1 transition-transform; }
+.badge { @apply rounded-full px-3 py-1 text-sm bg-bubble-300; }
+.card { @apply rounded-puffy bg-white/90 backdrop-blur p-6 shadow; }
+:focus-visible { outline: 3px solid #0ea5e9; outline-offset: 3px; }

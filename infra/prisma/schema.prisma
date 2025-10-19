@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  PARENT
+}
+
+model User {
+  id            String   @id @default(cuid())
+  role          Role
+  displayName   String
+  email         String?  @unique
+  guardianEmail String?
+  ageBand       String?
+  classes       Enrollment[]
+  submissions   Submission[]
+  createdAt     DateTime @default(now())
+  classroomsTaught Classroom[]
+}
+
+model Classroom {
+  id          String @id @default(cuid())
+  name        String
+  teacherId   String
+  teacher     User   @relation(fields: [teacherId], references: [id])
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id          String    @id @default(cuid())
+  classroomId String
+  userId      String
+  classroom   Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([classroomId, userId])
+}
+
+model Quest {
+  id           String   @id @default(cuid())
+  title        String
+  objective    String
+  targetSkills String[]
+  levels       Level[]
+}
+
+model Level {
+  id         String  @id @default(cuid())
+  questId    String
+  configJSON Json
+  testsJSON  Json
+  difficulty Int      @default(1)
+  quest      Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  levelId      String
+  startedAt    DateTime @default(now())
+  participants String[]
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  userId      String
+  levelId     String
+  programJSON Json
+  result      String
+  timeToSolve Int
+  hintsUsed   Int      @default(0)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}

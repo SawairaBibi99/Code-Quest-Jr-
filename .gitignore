@@ -1,0 +1,27 @@
+# Node
+node_modules/
+dist/
+build/
+pnpm-lock.yaml
+
+# Env
+.env
+infra/prisma/.env
+
+# Docker / DB
+pgdata/
+docker-data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
